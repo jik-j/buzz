@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buzzer System</title>
+    <title>Real-Time Buzzer System</title>
     <style>
         :root {
             --color-cream-50: rgba(252, 252, 249, 1);
@@ -31,13 +31,6 @@
             --color-border: rgba(var(--color-brown-600-rgb), 0.2);
             --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
             --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --space-8: 8px;
-            --space-12: 12px;
-            --space-16: 16px;
-            --space-20: 20px;
-            --space-24: 24px;
-            --radius-base: 8px;
-            --radius-lg: 12px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -66,54 +59,47 @@
             background-color: var(--color-background);
             color: var(--color-text);
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: var(--space-20);
+            padding: 20px;
         }
 
         .container {
             max-width: 600px;
-            width: 100%;
+            margin: 0 auto;
         }
 
         .card {
             background-color: var(--color-surface);
-            border-radius: var(--radius-lg);
+            border-radius: 12px;
             border: 1px solid var(--color-card-border);
-            padding: var(--space-24);
+            padding: 24px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
         }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: var(--space-24);
-            text-align: center;
+        h1, h2 {
+            margin-bottom: 16px;
             color: var(--color-text);
         }
 
         .form-group {
-            margin-bottom: var(--space-16);
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: var(--space-8);
+            margin-bottom: 8px;
             font-weight: 500;
             font-size: 14px;
-            color: var(--color-text);
         }
 
         input {
             width: 100%;
-            padding: var(--space-12);
+            padding: 12px;
             border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
+            border-radius: 8px;
             font-size: 16px;
             background-color: var(--color-surface);
             color: var(--color-text);
-            transition: border-color 0.2s;
         }
 
         input:focus {
@@ -123,14 +109,14 @@
 
         .btn {
             width: 100%;
-            padding: var(--space-12) var(--space-24);
+            padding: 12px 24px;
             border: none;
-            border-radius: var(--radius-base);
+            border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: var(--space-12);
+            margin-bottom: 12px;
         }
 
         .btn-primary {
@@ -142,33 +128,20 @@
             background-color: var(--color-primary-hover);
         }
 
-        .btn-secondary {
-            background-color: rgba(var(--color-brown-600-rgb), 0.12);
-            color: var(--color-text);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(var(--color-brown-600-rgb), 0.2);
-        }
-
         .btn-buzzer {
             height: 150px;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--color-red-400), var(--color-orange-400));
             color: white;
             box-shadow: 0 8px 16px rgba(255, 84, 89, 0.3);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .btn-buzzer:hover:not(:disabled) {
             transform: scale(1.02);
             box-shadow: 0 12px 24px rgba(255, 84, 89, 0.4);
-        }
-
-        .btn-buzzer:active:not(:disabled) {
-            transform: scale(0.98);
         }
 
         .btn-buzzer:disabled {
@@ -178,73 +151,28 @@
             box-shadow: none;
         }
 
-        @keyframes buzzer-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .buzzing {
-            animation: buzzer-pulse 0.3s ease-in-out;
-        }
-
         .room-code {
-            background-color: rgba(var(--color-teal-500-rgb), 0.1);
+            background-color: var(--color-background);
             border: 2px solid var(--color-primary);
-            border-radius: var(--radius-base);
-            padding: var(--space-16);
+            border-radius: 8px;
+            padding: 16px;
             text-align: center;
-            margin-bottom: var(--space-24);
-        }
-
-        .room-code h2 {
-            font-size: 18px;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-8);
-        }
-
-        .room-code .code {
             font-size: 32px;
             font-weight: 700;
-            color: var(--color-primary);
             letter-spacing: 4px;
-        }
-
-        .player-info {
-            text-align: center;
-            margin-bottom: var(--space-24);
-        }
-
-        .player-info h2 {
-            font-size: 18px;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-8);
-        }
-
-        .player-info .name {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--color-text);
-        }
-
-        .results {
-            margin-top: var(--space-24);
-        }
-
-        .results h3 {
-            font-size: 20px;
-            margin-bottom: var(--space-16);
-            color: var(--color-text);
+            color: var(--color-primary);
+            margin-bottom: 16px;
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-12);
-            margin-bottom: var(--space-8);
+            padding: 12px;
+            margin-bottom: 8px;
             background-color: var(--color-background);
             border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
+            border-radius: 8px;
         }
 
         .result-item.first {
@@ -254,452 +182,530 @@
 
         .result-position {
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--color-primary);
-            min-width: 40px;
+            min-width: 50px;
         }
 
-        .result-name {
-            flex: 1;
-            font-weight: 500;
+        .player-list {
+            margin-top: 16px;
         }
 
-        .result-time {
-            color: var(--color-text-secondary);
-            font-size: 14px;
-        }
-
-        .participants {
-            margin-top: var(--space-24);
-        }
-
-        .participants h3 {
-            font-size: 18px;
-            margin-bottom: var(--space-16);
-            color: var(--color-text);
-        }
-
-        .participant-item {
-            padding: var(--space-8) var(--space-12);
-            margin-bottom: var(--space-8);
+        .player-item {
+            padding: 12px;
+            margin-bottom: 8px;
             background-color: var(--color-background);
             border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
-            font-size: 14px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-online {
+            background-color: rgba(var(--color-teal-500-rgb), 0.15);
+            color: var(--color-primary);
+        }
+
+        .status-buzzed {
+            background-color: rgba(255, 84, 89, 0.15);
+            color: var(--color-red-400);
         }
 
         .hidden {
             display: none;
         }
 
-        .status-message {
-            text-align: center;
-            padding: var(--space-12);
-            background-color: rgba(var(--color-teal-500-rgb), 0.1);
-            border-radius: var(--radius-base);
-            margin-bottom: var(--space-16);
-            font-weight: 500;
-            color: var(--color-primary);
+        .warning-box {
+            background-color: rgba(230, 129, 97, 0.1);
+            border: 1px solid var(--color-orange-400);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .warning-box h3 {
+            color: var(--color-orange-400);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .warning-box ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .warning-box code {
+            background-color: var(--color-background);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="card">
-            <h1>🔔 Buzzer System</h1>
-            <button class="btn btn-primary" onclick="createRoom()">Create Room (Host)</button>
-            <button class="btn btn-secondary" onclick="showJoinForm()">Join Room (Player)</button>
+        <!-- Setup Instructions -->
+        <div class="warning-box">
+            <h3>⚙️ Supabase Setup Required</h3>
+            <p style="margin-bottom: 12px;"><strong>To make this work across devices, follow these steps:</strong></p>
+            <ol>
+                <li>Go to <a href="https://supabase.com" target="_blank" style="color: var(--color-primary);">Supabase.com</a> and create free account</li>
+                <li>Create a new project (free tier - no credit card needed)</li>
+                <li>Go to Project Settings → API</li>
+                <li>Copy your <strong>Project URL</strong> and <strong>anon/public key</strong></li>
+                <li>Replace lines 298-299 below with your credentials</li>
+                <li>Upload to GitHub Pages, Netlify, or any static host</li>
+            </ol>
         </div>
 
-        <!-- Join Room Screen -->
-        <div id="joinScreen" class="card hidden">
-            <h1>Join Room</h1>
-            <div class="form-group">
-                <label for="playerName">Your Name</label>
-                <input type="text" id="playerName" placeholder="Enter your name" maxlength="30">
-            </div>
-            <div class="form-group">
-                <label for="roomCode">Room Code</label>
-                <input type="text" id="roomCode" placeholder="Enter room code" maxlength="6">
-            </div>
-            <button class="btn btn-primary" onclick="joinRoom()">Join</button>
-            <button class="btn btn-secondary" onclick="showWelcome()">Back</button>
+        <!-- Initial Screen -->
+        <div id="initialScreen" class="card">
+            <h1>🔔 Real-Time Buzzer System</h1>
+            <p style="color: var(--color-text-secondary); margin-bottom: 24px;">Connect players across devices in real-time</p>
+            
+            <button class="btn btn-primary" onclick="showHostScreen()">Create Room (Host)</button>
+            <button class="btn btn-primary" onclick="showJoinScreen()">Join Room (Player)</button>
         </div>
 
         <!-- Host Screen -->
         <div id="hostScreen" class="card hidden">
-            <h1>Host Dashboard</h1>
-            <div class="room-code">
-                <h2>Room Code</h2>
-                <div class="code" id="hostRoomCode"></div>
-            </div>
+            <h2>🎮 Host Dashboard</h2>
+            <div class="room-code" id="hostRoomCode"></div>
+            <p style="text-align: center; color: var(--color-text-secondary); margin-bottom: 24px;">Share this code with players</p>
             
-            <div class="participants">
-                <h3>Connected Players (<span id="playerCount">0</span>)</h3>
-                <div id="participantsList"></div>
-            </div>
-
-            <div class="results" id="hostResults">
-                <h3>Buzz Results</h3>
-                <div id="hostResultsList"></div>
-            </div>
-
+            <h3 style="margin-bottom: 12px;">Connected Players</h3>
+            <div id="playersList" class="player-list"></div>
+            
+            <h3 style="margin-top: 24px; margin-bottom: 12px;">Buzz Results</h3>
+            <div id="hostResults"></div>
+            
             <button class="btn btn-primary" onclick="resetBuzzers()">Reset Buzzers</button>
-            <button class="btn btn-secondary" onclick="leaveRoom()">End Session</button>
+            <button class="btn btn-primary" onclick="leaveRoom()" style="background-color: var(--color-red-400);">End Session</button>
+        </div>
+
+        <!-- Join Screen -->
+        <div id="joinScreen" class="card hidden">
+            <h2>👤 Join as Player</h2>
+            <div class="form-group">
+                <label for="playerName">Your Name</label>
+                <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="roomCodeInput">Room Code</label>
+                <input type="text" id="roomCodeInput" placeholder="Enter 6-digit code" maxlength="6">
+            </div>
+            <button class="btn btn-primary" onclick="joinRoom()">Join Room</button>
+            <button class="btn btn-primary" onclick="showInitialScreen()" style="background-color: var(--color-red-400);">Back</button>
         </div>
 
         <!-- Player Screen -->
         <div id="playerScreen" class="card hidden">
-            <div class="room-code">
-                <h2>Room Code</h2>
-                <div class="code" id="playerRoomCode"></div>
-            </div>
-
-            <div class="player-info">
-                <h2>You are</h2>
-                <div class="name" id="playerDisplayName"></div>
-            </div>
-
-            <div id="statusMessage" class="status-message hidden"></div>
-
-            <button class="btn btn-buzzer" id="buzzerBtn" onclick="pressBuzzer()">
-                BUZZ!
-            </button>
-
-            <div class="results hidden" id="playerResults">
-                <h3>Results</h3>
-                <div id="playerResultsList"></div>
-            </div>
-
-            <button class="btn btn-secondary" onclick="leaveRoom()">Leave Room</button>
+            <h2>🎮 Player: <span id="playerDisplayName"></span></h2>
+            <div class="room-code" id="playerRoomCode" style="font-size: 24px; padding: 12px; margin-bottom: 24px;"></div>
+            
+            <button class="btn btn-buzzer" id="buzzerButton" onclick="pressBuzzer()">BUZZ!</button>
+            
+            <div id="buzzerStatus" style="text-align: center; font-size: 18px; margin-bottom: 16px; color: var(--color-text-secondary);"></div>
+            
+            <h3 style="margin-bottom: 12px;">Results</h3>
+            <div id="playerResults"></div>
+            
+            <button class="btn btn-primary" onclick="leaveRoom()" style="background-color: var(--color-red-400);">Leave Room</button>
         </div>
     </div>
 
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
-        // In-memory storage for sandboxed environments (replaces localStorage)
-        // Note: Data is lost on page refresh - for production use WebSocket server
-        window.buzzerRooms = window.buzzerRooms || {};
-        
-        let currentRoom = null;
-        let currentPlayer = null;
-        let isHost = false;
-        let buzzResults = [];
-        
-        // Generate random room code
+        // ==================== SUPABASE CONFIG ====================
+        // REPLACE WITH YOUR SUPABASE PROJECT DETAILS
+        const SUPABASE_URL = 'https://mwwygseeefynlgjsjypj.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13d3lnc2VhZWZ5bmxnanNqeXBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzNjUzNTcsImV4cCI6MjA3Njk0MTM1N30.U37MXrjdXuFT1LgP1jkaQ894ioOveorErx-KlbaVZy8';
+
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ==================== APP STATE ====================
+        let currentRole = null; // 'host' or 'player'
+        let currentRoomCode = null;
+        let currentPlayerName = null;
+        let currentPlayerId = null;
+
+        // ==================== AUDIO ====================
+        function playBuzzerSound() {
+            const audio = new Audio('rajini_valthukal.mp3');
+            audio.volume = 0.7;
+            audio.play().catch(err => console.log('Audio play failed:', err));
+        }
+
+        // ==================== SCREEN NAVIGATION ====================
+        function showInitialScreen() {
+            hideAllScreens();
+            document.getElementById('initialScreen').classList.remove('hidden');
+            leaveRoom();
+        }
+
+        function showHostScreen() {
+            hideAllScreens();
+            createRoom();
+        }
+
+        function showJoinScreen() {
+            hideAllScreens();
+            document.getElementById('joinScreen').classList.remove('hidden');
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.card').forEach(card => card.classList.add('hidden'));
+        }
+
+        // ==================== ROOM MANAGEMENT ====================
         function generateRoomCode() {
-            return Math.random().toString(36).substring(2, 8).toUpperCase();
+            return Math.floor(100000 + Math.random() * 900000).toString();
         }
 
-        // Create a new room
-        function createRoom() {
-            const roomCode = generateRoomCode();
-            currentRoom = {
-                code: roomCode,
-                host: 'Host',
-                players: [],
-                buzzResults: [],
-                locked: false
-            };
-            isHost = true;
+        async function createRoom() {
+            currentRole = 'host';
+            currentRoomCode = generateRoomCode();
             
-            // Save room to memory
-            saveRoom(roomCode, currentRoom);
-            
-            // Show host screen
-            document.getElementById('hostRoomCode').textContent = roomCode;
-            showScreen('hostScreen');
-            updateParticipantsList();
-            
-            // Start polling for updates
-            startPolling();
+            // Create room in Supabase
+            const { error } = await supabase
+                .from('rooms')
+                .insert([{
+                    room_code: currentRoomCode,
+                    created_at: new Date().toISOString(),
+                    locked: false
+                }]);
+
+            if (error) {
+                console.error('Error creating room:', error);
+                alert('Error creating room. Make sure you have set up Supabase correctly.');
+                return;
+            }
+
+            document.getElementById('hostRoomCode').textContent = currentRoomCode;
+            document.getElementById('hostScreen').classList.remove('hidden');
+
+            // Listen for players
+            listenForPlayers();
+            listenForBuzzResults();
         }
 
-        // Show join form
-        function showJoinForm() {
-            showScreen('joinScreen');
-        }
-
-        // Join existing room
-        function joinRoom() {
+        async function joinRoom() {
             const name = document.getElementById('playerName').value.trim();
-            const code = document.getElementById('roomCode').value.trim().toUpperCase();
-            
+            const roomCode = document.getElementById('roomCodeInput').value.trim();
+
             if (!name) {
                 alert('Please enter your name');
                 return;
             }
-            
-            if (!code) {
-                alert('Please enter room code');
+
+            if (!roomCode || roomCode.length !== 6) {
+                alert('Please enter a valid 6-digit room code');
                 return;
             }
-            
-            const room = getRoom(code);
-            if (!room) {
-                alert('Room not found. Please check the code.');
+
+            // Check if room exists
+            const { data: room, error: roomError } = await supabase
+                .from('rooms')
+                .select('*')
+                .eq('room_code', roomCode)
+                .single();
+
+            if (roomError || !room) {
+                alert('Room not found. Check the code and try again.');
                 return;
             }
-            
-            // Check if name already exists
-            if (room.players.some(p => p.name === name)) {
-                alert('This name is already taken in this room. Please choose another name.');
+
+            currentRole = 'player';
+            currentRoomCode = roomCode;
+            currentPlayerName = name;
+            currentPlayerId = Date.now().toString();
+
+            // Add player to room
+            const { error } = await supabase
+                .from('players')
+                .insert([{
+                    room_code: currentRoomCode,
+                    player_id: currentPlayerId,
+                    name: name,
+                    joined_at: new Date().toISOString(),
+                    buzzed: false
+                }]);
+
+            if (error) {
+                console.error('Error joining room:', error);
+                alert('Error joining room. Please try again.');
                 return;
             }
-            
-            currentPlayer = {
-                name: name,
-                id: Date.now().toString()
-            };
-            
-            currentRoom = room;
-            currentRoom.players.push(currentPlayer);
-            saveRoom(code, currentRoom);
-            
-            // Show player screen
-            document.getElementById('playerRoomCode').textContent = code;
+
             document.getElementById('playerDisplayName').textContent = name;
-            showScreen('playerScreen');
+            document.getElementById('playerRoomCode').textContent = 'Room: ' + roomCode;
+            document.getElementById('buzzerStatus').textContent = 'Ready to buzz!';
             
-            // Start polling for updates
-            startPolling();
+            hideAllScreens();
+            document.getElementById('playerScreen').classList.remove('hidden');
+
+            // Listen for room updates
+            listenForRoomLock();
+            listenForBuzzResults();
         }
 
-        // Play buzzer sound
-        function playBuzzerSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Create buzzer sound with oscillators
-            const oscillator1 = audioContext.createOscillator();
-            const oscillator2 = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator1.connect(gainNode);
-            oscillator2.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Set frequencies for a buzzer-like sound
-            oscillator1.frequency.value = 800;
-            oscillator2.frequency.value = 850;
-            oscillator1.type = 'square';
-            oscillator2.type = 'square';
-            
-            // Volume envelope
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            
-            // Play sound
-            oscillator1.start(audioContext.currentTime);
-            oscillator2.start(audioContext.currentTime);
-            oscillator1.stop(audioContext.currentTime + 0.3);
-            oscillator2.stop(audioContext.currentTime + 0.3);
-            
-            // Add visual feedback
-            const buzzerBtn = document.getElementById('buzzerBtn');
-            buzzerBtn.classList.add('buzzing');
-            setTimeout(() => buzzerBtn.classList.remove('buzzing'), 300);
-        }
-
-        // Press buzzer
-        function pressBuzzer() {
-            if (!currentRoom || currentRoom.locked) {
-                return;
+        async function leaveRoom() {
+            if (currentRole === 'player' && currentRoomCode && currentPlayerId) {
+                await supabase
+                    .from('players')
+                    .delete()
+                    .eq('room_code', currentRoomCode)
+                    .eq('player_id', currentPlayerId);
+            } else if (currentRole === 'host' && currentRoomCode) {
+                // Delete all related data
+                await supabase.from('buzzes').delete().eq('room_code', currentRoomCode);
+                await supabase.from('players').delete().eq('room_code', currentRoomCode);
+                await supabase.from('rooms').delete().eq('room_code', currentRoomCode);
             }
-            
-            // Play sound
+
+            currentRole = null;
+            currentRoomCode = null;
+            currentPlayerName = null;
+            currentPlayerId = null;
+        }
+
+        // ==================== BUZZER LOGIC ====================
+        async function pressBuzzer() {
+            if (!currentRoomCode || !currentPlayerId) return;
+
+            // Check if already locked
+            const { data: room } = await supabase
+                .from('rooms')
+                .select('locked')
+                .eq('room_code', currentRoomCode)
+                .single();
+
+            if (room && room.locked === true) return;
+
             playBuzzerSound();
+
+            const buzzTime = new Date().toISOString();
             
-            const buzzTime = new Date().toLocaleTimeString();
-            const result = {
-                name: currentPlayer.name,
-                time: buzzTime,
-                timestamp: Date.now()
-            };
-            
-            currentRoom.buzzResults.push(result);
-            currentRoom.locked = true; // Lock after first buzz for this demo
-            saveRoom(currentRoom.code, currentRoom);
-            
-            // Disable button and show message
-            document.getElementById('buzzerBtn').disabled = true;
-            showStatusMessage('Buzzed! Waiting for host to reset...');
-            
-            // Show results
-            updatePlayerResults();
+            // Record buzz
+            await supabase
+                .from('buzzes')
+                .insert([{
+                    room_code: currentRoomCode,
+                    player_id: currentPlayerId,
+                    name: currentPlayerName,
+                    buzz_time: buzzTime
+                }]);
+
+            // Update player status
+            await supabase
+                .from('players')
+                .update({ buzzed: true })
+                .eq('room_code', currentRoomCode)
+                .eq('player_id', currentPlayerId);
+
+            // Lock room (first buzz wins)
+            await supabase
+                .from('rooms')
+                .update({ locked: true })
+                .eq('room_code', currentRoomCode);
+
+            document.getElementById('buzzerButton').disabled = true;
+            document.getElementById('buzzerStatus').textContent = 'Buzzed!';
         }
 
-        // Reset buzzers (host only)
-        function resetBuzzers() {
-            if (!isHost || !currentRoom) return;
-            
-            currentRoom.buzzResults = [];
-            currentRoom.locked = false;
-            saveRoom(currentRoom.code, currentRoom);
-            
-            // Clear results display
-            document.getElementById('hostResultsList').innerHTML = '<p style="color: var(--color-text-secondary); text-align: center;">Waiting for players to buzz...</p>';
+        async function resetBuzzers() {
+            if (!currentRoomCode || currentRole !== 'host') return;
+
+            // Reset all buzzes and lock
+            await supabase
+                .from('buzzes')
+                .delete()
+                .eq('room_code', currentRoomCode);
+
+            await supabase
+                .from('rooms')
+                .update({ locked: false })
+                .eq('room_code', currentRoomCode);
+
+            // Reset all player buzzed status
+            await supabase
+                .from('players')
+                .update({ buzzed: false })
+                .eq('room_code', currentRoomCode);
         }
 
-        // Update participants list (host view)
-        function updateParticipantsList() {
-            if (!isHost || !currentRoom) return;
-            
-            const list = document.getElementById('participantsList');
-            const count = document.getElementById('playerCount');
-            
-            count.textContent = currentRoom.players.length;
-            
-            if (currentRoom.players.length === 0) {
-                list.innerHTML = '<p style="color: var(--color-text-secondary); text-align: center;">No players yet. Share the room code!</p>';
-            } else {
-                list.innerHTML = currentRoom.players.map(p => `
-                    <div class="participant-item">${p.name}</div>
-                `).join('');
-            }
-        }
+        // ==================== LISTENERS ====================
+        function listenForPlayers() {
+            // Subscribe to realtime changes
+            supabase
+                .channel('players-channel')
+                .on('postgres_changes', {
+                    event: '*',
+                    schema: 'public',
+                    table: 'players',
+                    filter: `room_code=eq.${currentRoomCode}`
+                }, async () => {
+                    const { data: players } = await supabase
+                        .from('players')
+                        .select('*')
+                        .eq('room_code', currentRoomCode);
 
-        // Update host results display
-        function updateHostResults() {
-            if (!isHost || !currentRoom) return;
-            
-            const list = document.getElementById('hostResultsList');
-            
-            if (currentRoom.buzzResults.length === 0) {
-                list.innerHTML = '<p style="color: var(--color-text-secondary); text-align: center;">Waiting for players to buzz...</p>';
-            } else {
-                // Sort by timestamp
-                const sorted = [...currentRoom.buzzResults].sort((a, b) => a.timestamp - b.timestamp);
-                
-                list.innerHTML = sorted.map((result, index) => `
-                    <div class="result-item ${index === 0 ? 'first' : ''}">
-                        <span class="result-position">${index === 0 ? '🏆' : '#' + (index + 1)}</span>
-                        <span class="result-name">${result.name}</span>
-                        <span class="result-time">${result.time}</span>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Update player results display
-        function updatePlayerResults() {
-            if (isHost || !currentRoom) return;
-            
-            const resultsDiv = document.getElementById('playerResults');
-            const list = document.getElementById('playerResultsList');
-            
-            if (currentRoom.buzzResults.length === 0) {
-                resultsDiv.classList.add('hidden');
-            } else {
-                resultsDiv.classList.remove('hidden');
-                
-                // Sort by timestamp
-                const sorted = [...currentRoom.buzzResults].sort((a, b) => a.timestamp - b.timestamp);
-                
-                list.innerHTML = sorted.map((result, index) => `
-                    <div class="result-item ${index === 0 ? 'first' : ''}">
-                        <span class="result-position">${index === 0 ? '🏆' : '#' + (index + 1)}</span>
-                        <span class="result-name">${result.name}</span>
-                        <span class="result-time">${result.time}</span>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Show status message
-        function showStatusMessage(message) {
-            const statusDiv = document.getElementById('statusMessage');
-            statusDiv.textContent = message;
-            statusDiv.classList.remove('hidden');
-        }
-
-        // Leave room
-        function leaveRoom() {
-            if (currentRoom && !isHost) {
-                // Remove player from room
-                currentRoom.players = currentRoom.players.filter(p => p.id !== currentPlayer.id);
-                saveRoom(currentRoom.code, currentRoom);
-            }
-            
-            // Clear polling
-            if (window.pollingInterval) {
-                clearInterval(window.pollingInterval);
-            }
-            
-            currentRoom = null;
-            currentPlayer = null;
-            isHost = false;
-            showWelcome();
-        }
-
-        // Polling to simulate real-time updates
-        function startPolling() {
-            if (window.pollingInterval) {
-                clearInterval(window.pollingInterval);
-            }
-            
-            window.pollingInterval = setInterval(() => {
-                if (!currentRoom) {
-                    clearInterval(window.pollingInterval);
-                    return;
-                }
-                
-                const updatedRoom = getRoom(currentRoom.code);
-                if (!updatedRoom) {
-                    alert('Room has been closed');
-                    leaveRoom();
-                    return;
-                }
-                
-                currentRoom = updatedRoom;
-                
-                if (isHost) {
-                    updateParticipantsList();
-                    updateHostResults();
-                } else {
-                    // Update buzzer button state
-                    const buzzerBtn = document.getElementById('buzzerBtn');
-                    buzzerBtn.disabled = currentRoom.locked;
+                    const playersList = document.getElementById('playersList');
                     
-                    if (currentRoom.locked) {
-                        showStatusMessage('Buzzed! Waiting for host to reset...');
-                    } else {
-                        document.getElementById('statusMessage').classList.add('hidden');
+                    if (!players || players.length === 0) {
+                        playersList.innerHTML = '<p style="color: var(--color-text-secondary); font-style: italic;">No players yet</p>';
+                        return;
                     }
-                    
-                    updatePlayerResults();
+
+                    playersList.innerHTML = players.map(player => {
+                        const status = player.buzzed ? 'status-buzzed' : 'status-online';
+                        const statusText = player.buzzed ? 'Buzzed' : 'Online';
+                        return `
+                            <div class="player-item">
+                                <span>${player.name}</span>
+                                <span class="status-badge ${status}">${statusText}</span>
+                            </div>
+                        `;
+                    }).join('');
+                })
+                .subscribe();
+
+            // Initial load
+            supabase.from('players').select('*').eq('room_code', currentRoomCode).then(({ data: players }) => {
+                const playersList = document.getElementById('playersList');
+                if (!players || players.length === 0) {
+                    playersList.innerHTML = '<p style="color: var(--color-text-secondary); font-style: italic;">No players yet</p>';
+                    return;
                 }
-            }, 500);
-        }
-
-        // Storage helpers (in-memory storage for sandboxed environments)
-        function saveRoom(code, room) {
-            window.buzzerRooms[code] = JSON.parse(JSON.stringify(room)); // Deep clone
-        }
-
-        function getRoom(code) {
-            return window.buzzerRooms[code] ? JSON.parse(JSON.stringify(window.buzzerRooms[code])) : null;
-        }
-
-        // Screen management
-        function showScreen(screenId) {
-            ['welcomeScreen', 'joinScreen', 'hostScreen', 'playerScreen'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+                playersList.innerHTML = players.map(player => {
+                    const status = player.buzzed ? 'status-buzzed' : 'status-online';
+                    const statusText = player.buzzed ? 'Buzzed' : 'Online';
+                    return `
+                        <div class="player-item">
+                            <span>${player.name}</span>
+                            <span class="status-badge ${status}">${statusText}</span>
+                        </div>
+                    `;
+                }).join('');
             });
-            document.getElementById(screenId).classList.remove('hidden');
         }
 
-        function showWelcome() {
-            showScreen('welcomeScreen');
-            document.getElementById('playerName').value = '';
-            document.getElementById('roomCode').value = '';
+        function listenForBuzzResults() {
+            // Subscribe to realtime changes
+            supabase
+                .channel('buzzes-channel')
+                .on('postgres_changes', {
+                    event: '*',
+                    schema: 'public',
+                    table: 'buzzes',
+                    filter: `room_code=eq.${currentRoomCode}`
+                }, async () => {
+                    const { data: buzzes } = await supabase
+                        .from('buzzes')
+                        .select('*')
+                        .eq('room_code', currentRoomCode)
+                        .order('buzz_time', { ascending: true });
+
+                    const resultsDiv = currentRole === 'host' ? 
+                        document.getElementById('hostResults') : 
+                        document.getElementById('playerResults');
+
+                    if (!buzzes || buzzes.length === 0) {
+                        resultsDiv.innerHTML = '<p style="color: var(--color-text-secondary); font-style: italic;">Waiting for buzzes...</p>';
+                        return;
+                    }
+
+                    resultsDiv.innerHTML = buzzes.map((buzz, index) => {
+                        const position = index === 0 ? '🏆' : '#' + (index + 1);
+                        const time = new Date(buzz.buzz_time).toLocaleTimeString();
+                        return `
+                            <div class="result-item ${index === 0 ? 'first' : ''}">
+                                <span class="result-position">${position}</span>
+                                <span style="flex: 1;">${buzz.name}</span>
+                                <span style="color: var(--color-text-secondary); font-size: 14px;">${time}</span>
+                            </div>
+                        `;
+                    }).join('');
+                })
+                .subscribe();
+
+            // Initial load
+            supabase.from('buzzes').select('*').eq('room_code', currentRoomCode).order('buzz_time', { ascending: true }).then(({ data: buzzes }) => {
+                const resultsDiv = currentRole === 'host' ? 
+                    document.getElementById('hostResults') : 
+                    document.getElementById('playerResults');
+                if (!buzzes || buzzes.length === 0) {
+                    resultsDiv.innerHTML = '<p style="color: var(--color-text-secondary); font-style: italic;">Waiting for buzzes...</p>';
+                    return;
+                }
+                resultsDiv.innerHTML = buzzes.map((buzz, index) => {
+                    const position = index === 0 ? '🏆' : '#' + (index + 1);
+                    const time = new Date(buzz.buzz_time).toLocaleTimeString();
+                    return `
+                        <div class="result-item ${index === 0 ? 'first' : ''}">
+                            <span class="result-position">${position}</span>
+                            <span style="flex: 1;">${buzz.name}</span>
+                            <span style="color: var(--color-text-secondary); font-size: 14px;">${time}</span>
+                        </div>
+                    `;
+                }).join('');
+            });
         }
 
-        // Cleanup on page unload
+        function listenForRoomLock() {
+            // Subscribe to realtime changes
+            supabase
+                .channel('room-lock-channel')
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'rooms',
+                    filter: `room_code=eq.${currentRoomCode}`
+                }, async (payload) => {
+                    const locked = payload.new.locked;
+                    const buzzerButton = document.getElementById('buzzerButton');
+                    const statusDiv = document.getElementById('buzzerStatus');
+
+                    if (locked) {
+                        buzzerButton.disabled = true;
+                        
+                        // Check if this player buzzed
+                        const { data: player } = await supabase
+                            .from('players')
+                            .select('buzzed')
+                            .eq('room_code', currentRoomCode)
+                            .eq('player_id', currentPlayerId)
+                            .single();
+
+                        if (player && player.buzzed === true) {
+                            statusDiv.textContent = 'You buzzed!';
+                        } else {
+                            statusDiv.textContent = 'Someone else buzzed first';
+                        }
+                    } else {
+                        buzzerButton.disabled = false;
+                        statusDiv.textContent = 'Ready to buzz!';
+                    }
+                })
+                .subscribe();
+        }
+
+        // ==================== CLEANUP ====================
         window.addEventListener('beforeunload', () => {
-            if (window.pollingInterval) {
-                clearInterval(window.pollingInterval);
-            }
+            leaveRoom();
         });
     </script>
 </body>
